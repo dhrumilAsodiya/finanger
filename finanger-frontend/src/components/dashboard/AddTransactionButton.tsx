@@ -1,44 +1,42 @@
-"use client"; // Interactive Island
+"use client";
 
-import { useState } from "react";
-import { PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import TransactionForm from "./TransactionForm";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
   SheetTrigger,
+  SheetHeader, // <--- Add this import
+  SheetTitle,  // <--- Add this import
 } from "@/components/ui/sheet";
-import TransactionForm from "./TransactionForm";
+import { useState, useEffect } from "react";
 
 export default function AddTransactionButton() {
   const [open, setOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return <Button>Add Transaction</Button>;
+  }
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      {/* 1. The Trigger: This is what the user sees initially */}
       <SheetTrigger asChild>
-        <Button className="bg-slate-900 hover:bg-slate-800">
-          <PlusCircle className="mr-2 h-4 w-4" />
-          Add Transaction
-        </Button>
+        <Button>Add Transaction</Button>
       </SheetTrigger>
-
-      {/* 2. The Content: This slides out when clicked */}
-      {/* sm:max-w-[540px] makes it wider on tablets/desktop */}
-{/* Added 'p-6' to force 24px padding on all sides */}
-<SheetContent className="overflow-y-auto sm:max-w-[540px] p-6">
+      
+      <SheetContent side="right" className="w-100 sm:w-135">
+        {/* FIX: Add the Header and Title here */}
         <SheetHeader>
-          <SheetTitle>Add Transaction</SheetTitle>
-          <SheetDescription>
-            Record a new income or expense entry.
-          </SheetDescription>
+          <SheetTitle>Add New Transaction</SheetTitle>
         </SheetHeader>
-        
+
+        {/* Add some spacing below the title if needed */}
         <div className="mt-4">
-          {/* We pass the close function so the form can close the sheet on success */}
           <TransactionForm onClose={() => setOpen(false)} />
         </div>
       </SheetContent>
