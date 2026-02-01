@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8080/api/transactions";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/transactions";
 
 export interface Transaction {
   id?: string;
