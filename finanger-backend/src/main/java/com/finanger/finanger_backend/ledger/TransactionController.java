@@ -13,7 +13,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/transactions")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {
+        "http://localhost:3000",                   // Local development
+        "https://finanger.vercel.app",             // Main production URL
+        "https://finanger-v01.vercel.app"          // Your specific deployment URL (from the error log)
+}, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.OPTIONS})
 public class TransactionController {
 
     private final TransactionService service;
